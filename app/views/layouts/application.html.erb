@@ -10,6 +10,16 @@
   </head>
 
   <body>
+    <header>
+      <%= link_to "RailsTutorial2", static_pages_home_path %>
+      <nav>
+        <ul>
+          <li><%= link_to "ユーザ登録", new_user_path %></li>
+          <li><%= link_to "ユーザ一覧", users_path %></li>
+          <li><%= link_to "ログイン", "#" %></li>
+        </ul>
+      </nav
+    </header>
     <%= yield %>
   </body>
 </html>
