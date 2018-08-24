@@ -15,11 +15,24 @@
       <nav>
         <ul>
           <li><%= link_to "ユーザ登録", new_user_path %></li>
-          <li><%= link_to "ユーザ一覧", users_path %></li>
-          <li><%= link_to "ログイン", "#" %></li>
+          <% if logged_in? %>
+            <li><%= link_to "ユーザ一覧", users_path %></li>
+            <li>
+              Account
+              <ul>
+                <li><%= link_to "Profile", current_user %></li>
+                <li><%= link_to "Log out", sessions_destroy_path, method: :delete %></li>
+              </ul>
+            </li>
+          <% else %>
+            <li><%= link_to "Log in", sessions_new_path %></li>
+          <% end %>
         </ul>
       </nav>
     </header>
+    <% flash.each do |message_type, message| %>
+      <%= message %>
+    <% end %>
     <%= yield %>
   </body>
 </html>

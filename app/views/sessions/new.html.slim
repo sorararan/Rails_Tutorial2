@@ -1,0 +1,14 @@
+h1
+  | ログイン
+
+= form_for(:session, url: sessions_create_path) do |f|
+  = f.label :email
+  = f.email_field :email
+  br
+  = f.label :password
+  = f.password_field :password
+  br
+  = f.submit "ログイン"
+
+p
+  = link_to "新規登録", new_user_path

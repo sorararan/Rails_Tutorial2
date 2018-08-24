@@ -65,3 +65,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'slim-rails'
 # パスワードのハッシュ化のため
 gem 'bcrypt', '3.1.11'
+# bootstrapのため
+gem 'bootstrap-sass', '3.3.7'
+# jqueryのため
+gem 'jquery-rails', '4.3.1'
