@@ -1,14 +1,2 @@
 - if @feed_items.any?
-  ul
-    - @feed_items.each do |feed_item|
-      li
-        = link_to feed_item.user.name, feed_item.user
-        | : 
-        =feed_item.content
-        br
-        | Posted:
-        = time_ago_in_words(feed_item.created_at)
-        | ago.
-        - if current_user?(feed_item.user)
-          br
-          = link_to "[delete]", feed_item, method: :delete, data: { confirm: "You sure?"}
+  = render @feed_items

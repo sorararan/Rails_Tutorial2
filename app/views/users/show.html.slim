@@ -8,16 +8,4 @@ h1
     | Microposts: 
     = @user.microposts.count
 
-  ul
-    - @microposts.each do |micropost|
-      li
-        = link_to micropost.user.name, micropost.user
-        | :
-        = micropost.content
-        br
-        | Posted: 
-        = time_ago_in_words(micropost.created_at)
-        | ago.
-        - if current_user?(micropost.user)
-          br
-          = link_to "[delete]", micropost, method: :delete, data: { confirm: "You sure?" }
+  = render @microposts
