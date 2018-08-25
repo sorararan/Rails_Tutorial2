@@ -69,3 +69,12 @@ gem 'bcrypt', '3.1.11'
 gem 'bootstrap-sass', '3.3.7'
 # jqueryのため
 gem 'jquery-rails', '4.3.1'
+
+# 画像を扱うため
+gem 'carrierwave', '1.2.2'
+gem 'mini_magick', '4.7.0'
+
+group :production do
+  gem 'pg', '0.20.0'
+  gem 'fog', '1.42'
+end
