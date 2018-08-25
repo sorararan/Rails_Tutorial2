@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   post 'sessions/create'
   delete 'sessions/destroy'
   resources :users
+  resources :microposts, only: [:create, :destroy]
 end

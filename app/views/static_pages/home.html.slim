@@ -1,2 +1,11 @@
-h1 
-  | home
+- if logged_in?
+  = render 'shared/user_info'
+  br
+  = render 'shared/micropost_form'
+  br
+  h3
+    | Micropost Feed
+  = render 'shared/feed'
+- else
+  h1 
+    | home
