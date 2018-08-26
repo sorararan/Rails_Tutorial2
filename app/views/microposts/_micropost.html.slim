@@ -1,15 +1,14 @@
 ul
-  li
-    = link_to micropost.user.name, micropost.user
-    | : 
-    = micropost.content
-    br
-    - if micropost.picture?
-      = image_tag micropost.picture.url
-      br
-    | Posted: 
-    = time_ago_in_words(micropost.created_at)
-    |  ago.
-    - if current_user?(micropost.user)
-      br
-      = link_to "[delete]", micropost, method: :delete, data: { confirm: "よろしいですか?" }
+  li id="micropost-<%= micropost.id %>"
+    span class="user"
+      = link_to micropost.user.name, micropost.user
+    span class="content"
+      = micropost.content
+      - if micropost.picture?
+        = image_tag micropost.picture.url
+    span class="timestamp"
+      | 時間: 
+      = time_ago_in_words(micropost.created_at)
+      | 前
+      - if current_user?(micropost.user)
+        = link_to "[delete]", micropost, method: :delete, data: { confirm: "よろしいですか?" }

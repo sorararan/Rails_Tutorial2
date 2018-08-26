@@ -2,12 +2,12 @@ class UsersController < ApplicationController
   
   def index
     logged_in_user
-    @users ||= User.all
+    @users ||= User.all.paginate(page: params[:page])
   end
 
   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def new
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     logged_in_user
     @title = "Following"
     @user  = User.find(params[:id])
-    @users = @user.following
+    @users = @user.following.paginate(page: params[:page])
     render 'show_follow'
   end
 
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     logged_in_user
     @title = "Followers"
     @user  = User.find(params[:id])
-    @users = @user.followers
+    @users = @user.followers.paginate(page: params[:page])
     render 'show_follow'
   end
 

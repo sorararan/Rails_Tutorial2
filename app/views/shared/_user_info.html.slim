@@ -1,5 +1,6 @@
 h1
   = current_user.name
-= link_to "自分のプロフィール", current_user
-br
-= pluralize(current_user.microposts.count, "micropost")
+span
+  = link_to "自分のプロフィール", current_user
+span
+  = pluralize(current_user.microposts.count, "micropost")

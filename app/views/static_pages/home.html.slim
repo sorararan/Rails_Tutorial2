@@ -1,13 +1,18 @@
 - if logged_in?
-  = render 'shared/user_info'
-  br
-  = render 'shared/stats'
-  br
-  = render 'shared/micropost_form'
-  br
-  h3
-    | Micropost Feed
-  = render 'shared/feed'
+  div class="row"
+    aside class="col-md-4"
+      section class="user_info"
+        = render 'shared/user_info'
+      section class="stat"
+        = render 'shared/stats'
+      section class="micropost_form"
+        =render 'shared/micropost_form'
+    div class="col-md-8"
+      h3
+        | Micropost Feed
+      = render 'shared/feed'
 - else
-  h1 
-    | home
+  div class="center jumbotron"
+    h1
+      | home
+    = link_to "新規登録", new_user_path, class: "btn btn-lg btn-primary"

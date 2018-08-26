@@ -69,10 +69,12 @@ gem 'bcrypt', '3.1.11'
 gem 'bootstrap-sass', '3.3.7'
 # jqueryのため
 gem 'jquery-rails', '4.3.1'
-
 # 画像を扱うため
 gem 'carrierwave', '1.2.2'
 gem 'mini_magick', '4.7.0'
+#ページネーションのため
+gem 'will_paginate', '3.1.6'
+gem 'bootstrap-will_paginate', '1.0.0'
 
 group :production do
   gem 'pg', '0.20.0'
