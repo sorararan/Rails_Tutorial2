@@ -1,0 +1,9 @@
+- @user ||= current_user
+
+= @user.following.count
+| : 
+= link_to 'following', following_user_path(@user)
+br
+= @user.followers.count
+| : 
+= link_to 'followers', followers_user_path(@user)

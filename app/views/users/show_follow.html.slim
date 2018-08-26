@@ -1,0 +1,15 @@
+h1
+  = @user.name
+= link_to "プロフィール", @user
+br
+| Microposts: 
+= @user.microposts.count
+br
+= render 'shared/stats'
+br
+
+h3
+  = @title
+- if @users.any?
+  = render @users
+
