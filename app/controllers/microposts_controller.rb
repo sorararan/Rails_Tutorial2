@@ -10,7 +10,7 @@ class MicropostsController < ApplicationController
       flash.now[:error] = "投稿に失敗しました"
       # feed_itemsがnilになるのを防ぐ
       @feed_items = []
-      render static_pages_home_path
+      redirect_to static_pages_home_path
     end
   end
 

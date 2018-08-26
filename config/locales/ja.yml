@@ -28,6 +28,13 @@ ja:
       create: 作成する
       submit: 保存する
       update: 更新する
+      relationship:
+        create: フォローする
+        update: フォロー解除
+      micropost:
+        create: 投稿する
+      user:
+        create: 新規ユーザ作成
   date:
     abbr_day_names:
     - 日
