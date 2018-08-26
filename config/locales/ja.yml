@@ -1,0 +1,30 @@
+ja:
+  activerecord:
+    models:
+      user:
+      micropost:
+    attributes:
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード(確認)
+      micropost:
+        content: 内容
+        picture: 画像
+  errors:
+    messages:
+      invalid: は不正な値です
+      confirmation: と%{attribute}の入力が一致しません
+      blank: を入力してください
+      too_long: は%{count}文字以内で入力してください
+      too_short: は%{count}文字以上で入力してください
+  helpers:
+    label:
+      session:
+        email: メールアドレス
+        password: パスワード
+    submit:
+      create: 作成する
+      submit: 保存する
+      update: 更新する
