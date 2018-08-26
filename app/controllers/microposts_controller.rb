@@ -1,22 +1,29 @@
 class MicropostsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy]
-  before_action :correct_user, only: :destroy
 
   def create
+    logged_in_user
     @micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
-      flash[:success] = "Micropost created!"
+      flash[:success] = "投稿しました"
       redirect_to static_pages_home_path
     else
+      flash.now[:error] = "投稿に失敗しました"
+      # feed_itemsがnilになるのを防ぐ
       @feed_items = []
-      render 'static_pages/home'
+      render static_pages_home_path
     end
   end
 
   def destroy
-    @micropost.destroy
-    flash[:success] = "削除に成功しました"
-    redirect_to request.referrer || static_pages_home_path
+    logged_in_user
+    correct_user
+    if @micropost.destroy
+      flash[:success] = "削除に成功しました"
+      redirect_to request.referrer || static_pages_home_path
+    else
+      flash.now[:error] = "削除に失敗しました"
+      redirect_to request.referrer || static_pages_home_path
+    end
   end
 
   private

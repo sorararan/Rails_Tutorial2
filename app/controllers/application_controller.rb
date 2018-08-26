@@ -3,10 +3,11 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   private
+    # ログインしていないと入れないページに入れないようにする
     def logged_in_user
       unless logged_in?
         store_location
-        flash[:danger] = "ログインしてください"
+        flash[:error] = "ログインしてください"
         redirect_to sessions_new_path
       end
     end

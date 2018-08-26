@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :following, :followers]
   
   def index
+    logged_in_user
     @users ||= User.all
   end
 
@@ -21,11 +21,13 @@ class UsersController < ApplicationController
       flash[:success] = "ユーザの作成に成功しました"
       redirect_to @user
     else
-      render 'new'
+      flash.now[:error] = "ユーザの作成に失敗しました"
+      render new_user_path
     end
   end
 
   def following
+    logged_in_user
     @title = "Following"
     @user  = User.find(params[:id])
     @users = @user.following
@@ -33,6 +35,7 @@ class UsersController < ApplicationController
   end
 
   def followers
+    logged_in_user
     @title = "Followers"
     @user  = User.find(params[:id])
     @users = @user.followers
@@ -46,14 +49,6 @@ class UsersController < ApplicationController
 
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
-    end
-
-    def logged_in_user
-      unless logged_in?
-        store_location
-        flash[:danger] = "ログインしてください"
-        redirect_to sessions_new_path
-      end
+      redirect_to(static_pages_home_path) unless current_user?(@user)
     end
 end
