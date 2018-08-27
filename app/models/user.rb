@@ -58,8 +58,8 @@ class User < ApplicationRecord
 
   def feed
     following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
-    # フォローしてるユーザのマイクロポスト or 自分のポスト or 自分宛てのポスト
-    Micropost.including_replies(id).where("user_id IN (#{following_ids}) OR user_id = :user_id OR in_reply_to = :user_id", user_id: id)
+    # フォローしてるユーザのマイクロポスト or 自分のポスト
+    Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
   end
 
   def follow(other_user)
