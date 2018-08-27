@@ -9,5 +9,6 @@ Rails.application.routes.draw do
     end
   end
   resources :microposts, only: [:create, :destroy]
+  post 'microposts/:micropost_id', to: 'microposts#create_reply'
   resources :relationships, only: [:create, :destroy]
 end
