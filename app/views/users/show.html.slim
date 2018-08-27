@@ -10,7 +10,7 @@ div class="row"
 
   div class="col-md-8"
     = render 'follow_form' if logged_in?
-    - if @user.microposts.any?
+    - if @user.microposts.present?
       h3
         | Microposts: 
         = @user.microposts.count

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
+  before_action :enforce_log_in, only: [:index, :following, :followers]
   
   def index
-    logged_in_user
     @users ||= User.all.paginate(page: params[:page])
   end
 
@@ -27,7 +27,6 @@ class UsersController < ApplicationController
   end
 
   def following
-    logged_in_user
     @title = "Following"
     @user  = User.find(params[:id])
     @users = @user.following.paginate(page: params[:page])
@@ -35,7 +34,6 @@ class UsersController < ApplicationController
   end
 
   def followers
-    logged_in_user
     @title = "Followers"
     @user  = User.find(params[:id])
     @users = @user.followers.paginate(page: params[:page])
@@ -47,8 +45,4 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(static_pages_home_path) unless current_user?(@user)
-    end
 end

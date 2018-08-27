@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   private
     # ログインしていないと入れないページに入れないようにする
-    def logged_in_user
+    def enforce_log_in
       unless logged_in?
         store_location
         flash[:error] = "ログインしてください"

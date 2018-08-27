@@ -1,22 +1,19 @@
 class MicropostsController < ApplicationController
+  before_action :enforce_log_in, only: [:create, :destroy]
 
   def create
-    logged_in_user
     @micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
       flash[:success] = "投稿しました"
       redirect_to static_pages_home_path
     else
       flash.now[:error] = "投稿に失敗しました"
-      # feed_itemsがnilになるのを防ぐ
-      @feed_items = []
       redirect_to static_pages_home_path
     end
   end
 
   def destroy
-    logged_in_user
-    correct_user
+    user_corresponding
     if @micropost.destroy
       flash[:success] = "削除に成功しました"
       redirect_to request.referrer || static_pages_home_path
@@ -32,7 +29,7 @@ class MicropostsController < ApplicationController
       params.require(:micropost).permit(:content, :picture)
     end
 
-    def correct_user
+    def user_corresponding
       @micropost = current_user.microposts.find_by(id: params[:id])
       redirect_to static_pages_home_path if @micropost.nil?
     end
