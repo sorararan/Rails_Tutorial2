@@ -1,8 +1,9 @@
 - if micropost.present?
-  = form_for(@micropost, url: micropost_path(micropost.id), id: micropost.id) do |f|
+  = form_for(@micropost, url: micropost_path(micropost.id)) do |f|
     = render 'shared/error_messages', object: f.object
     div class="field"
       = f.text_area :content
+    = f.hidden_field :micropost_id, :value => micropost.id
     = f.submit class: "btn btn-primary"
     span class="picture"
       = f.file_field :picture, accept: 'image/jpeg,image/gif,image/png'

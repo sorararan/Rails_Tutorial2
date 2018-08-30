@@ -1,13 +1,7 @@
-class EmailValidator < ActiveModel::EachValidator
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  def validate_each(record, attribute, value)
-    unless value =~ VALID_EMAIL_REGEX
-      record.errors.add(:email, "は不正な値です")
-    end
-  end
-end
-
 class User < ApplicationRecord
+  require_relative "emailformatvalidator"
+  before_save { self.email = email.downcase }
+
   has_many :microposts
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
@@ -19,30 +13,16 @@ class User < ApplicationRecord
   has_many :followers, through: :passive_relationships, source: :follower
 
   attr_accessor :remember_token
-  before_save { self.email = email.downcase }
   validates :name, presence: true, length: { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, email: true, 
+  validates :email, emailformat: true, 
                     presence: true, length: {maximum: 255}, uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
 
-  # 文字列に対応したハッシュ値を返す
-  def self.create_digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                  BCrypt::Engine.cost
-    BCrypt::Password.create(string, cost: cost)
-  end
-
-  # ランダムなトークンを返す
-  def self.new_token
-    SecureRandom.urlsafe_base64
-  end
-
   # remember_digestに記憶
   def remember
-    self.remember_token = self.new_token
-    update_attribute(:remember_digest, self.create_digest(remember_token))
+    self.remember_token = Session.new_token
+    update_attribute(:remember_digest, Session.create_digest(remember_token))
   end
 
   # 渡されたトークンがダイジェストと一致したらtrue

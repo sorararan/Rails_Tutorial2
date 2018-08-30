@@ -13,8 +13,7 @@ class MicropostsController < ApplicationController
   end
 
   def create_reply
-    @micropost = current_user.microposts.build(micropost_params)
-    @micropost.micropost_id = params[:micropost_id].to_i
+    @micropost = current_user.microposts.build(reply_params)
     if @micropost.save
       flash[:success] = "返信しました"
       redirect_to static_pages_home_path
@@ -25,7 +24,8 @@ class MicropostsController < ApplicationController
   end
 
   def destroy
-    user_corresponding
+    @micropost = current_user.microposts.find_by(id: params[:id])
+    redirect_to static_pages_home_path if @micropost.nil?
     if @micropost.destroy
       flash[:success] = "削除に成功しました"
       redirect_to request.referrer || static_pages_home_path
@@ -39,10 +39,10 @@ class MicropostsController < ApplicationController
     
     def micropost_params
       params.require(:micropost).permit(:content, :picture)
+    end 
+
+    def reply_params
+      params.require(:micropost).permit(:content, :picture, :micropost_id)
     end
 
-    def user_corresponding
-      @micropost = current_user.microposts.find_by(id: params[:id])
-      redirect_to static_pages_home_path if @micropost.nil?
-    end
 end
