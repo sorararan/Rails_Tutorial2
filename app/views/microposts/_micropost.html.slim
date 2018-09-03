@@ -24,7 +24,7 @@ ul
         span class="content"
           = reply.content
           - if reply.picture.present?
-            = image_tag reply.picture
+            = image_tag reply.picture.url
           span class="timestamp"
             | 時間:
             = time_ago_in_words(reply.created_at)
