@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :enforce_log_in, only: [:index, :following, :followers]
+  before_action :enforce_log_in, only: [:index, :following, :followers, :show]
   
   def index
     @users ||= User.all.paginate(page: params[:page])
@@ -23,18 +23,20 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       flash.now[:error] = "ユーザの作成に失敗しました"
-      render new_user_path
+      render :new
     end
   end
 
   def following
     @title = "Following"
-    following_followers_variables
+    find_user
+    @users = @user.following.paginate(page: params[:page])
   end
 
   def followers
     @title = "Followers"
-    following_followers_variables
+    find_user
+    @users = @user.followers.paginate(page: params[:page])
   end
 
   private
@@ -42,9 +44,8 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 
-    def following_followers_variables
+    def find_user
       @user  = User.find(params[:id])
-      @users = @user.following.paginate(page: params[:page])
     end
 
 end

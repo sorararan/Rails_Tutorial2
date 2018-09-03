@@ -25,7 +25,7 @@ class MicropostsController < ApplicationController
 
   def destroy
     @micropost = current_user.microposts.find_by(id: params[:id])
-    redirect_to static_pages_home_path if @micropost.nil?
+    redirect_to static_pages_home_path unless @micropost.present?
     if @micropost.destroy
       flash[:success] = "削除に成功しました"
       redirect_to request.referrer || static_pages_home_path

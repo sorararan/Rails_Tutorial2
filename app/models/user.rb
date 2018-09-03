@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  require_relative "emailformatvalidator"
+  require "./app/validators/email_format_validator.rb"
   before_save { self.email = email.downcase }
 
   has_many :microposts

@@ -8,7 +8,10 @@ Rails.application.routes.draw do
       get :following, :followers
     end
   end
-  resources :microposts, only: [:create, :destroy]
-  post 'microposts/:micropost_id', to: 'microposts#create_reply'
+  resources :microposts, only: [:create, :destroy] do
+    member do
+      post :create_reply
+    end
+  end
   resources :relationships, only: [:create, :destroy]
 end
