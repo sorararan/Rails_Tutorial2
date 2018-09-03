@@ -30,13 +30,13 @@ class UsersController < ApplicationController
   def following
     @title = "Following"
     find_user
-    @users = @user.following.paginate(page: params[:page])
+    @users = user.following.paginate(page: params[:page])
   end
 
   def followers
     @title = "Followers"
     find_user
-    @users = @user.followers.paginate(page: params[:page])
+    @users = user.followers.paginate(page: params[:page])
   end
 
   private
@@ -44,8 +44,8 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 
-    def find_user
-      @user  = User.find(params[:id])
+    def user
+      @user ||= User.find(params[:id])
     end
 
 end
