@@ -29,13 +29,11 @@ class UsersController < ApplicationController
 
   def following
     @title = "Following"
-    find_user
     @users = user.following.paginate(page: params[:page])
   end
 
   def followers
     @title = "Followers"
-    find_user
     @users = user.followers.paginate(page: params[:page])
   end
 
