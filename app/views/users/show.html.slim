@@ -1,0 +1,19 @@
+div class="row"
+  aside class="col-md-4"
+    section class="user_info"
+      h1
+        = @user.name
+        | , 
+        = @user.email
+    section class="stats"
+      = render 'shared/stats'
+
+  div class="col-md-8"
+    = render 'follow_form' if logged_in?
+    - if @user.microposts.present?
+      h3
+        | Microposts: 
+        = @user.microposts.count
+      ol class="microposts"
+        = render @microposts
+      = will_paginate @microposts

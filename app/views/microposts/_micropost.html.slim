@@ -1,0 +1,31 @@
+ul
+  li id="micropost-<%= micropost.id %>"
+    span class="user"
+      = link_to micropost.user.name, micropost.user
+    span class="content"
+      = micropost.content
+      - if micropost.picture.present?
+        = image_tag micropost.picture.url
+    span class="timestamp"
+      | 時間: 
+      = time_ago_in_words(micropost.created_at)
+      | 前
+      section class="reply_form"
+        = render 'shared/reply_form', { micropost: micropost }
+      - if is_current_user?(micropost.user)
+        = link_to "[delete]", micropost, method: :delete, data: { confirm: "よろしいですか?" }
+  - if micropost.microposts.present?
+    h4
+      | 返信
+    li
+      - micropost.microposts.each do |reply|
+        span class="user"
+          = link_to reply.user.name, reply.user
+        span class="content"
+          = reply.content
+          - if reply.picture.present?
+            = image_tag reply.picture.url
+          span class="timestamp"
+            | 時間:
+            = time_ago_in_words(reply.created_at)
+            | 前 
